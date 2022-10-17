@@ -40,25 +40,25 @@ class Solution {
 	public static int[] help_classmate(int arr[], int n) 
 	{ 
 	    
-	    Stack<Integer> st = new Stack<>();
+	   // Stack<Integer> st = new Stack<>();
+	   Deque<Integer> st = new ArrayDeque<>();
 	    int[] ans = new int[arr.length];
-	    int p1=0, p2=1;
-	    for(int i=0; i<arr.length-1; i++) {
-	        p1=i;
-	        p2=i+1;
-	        while(p2 < arr.length) {
-	            
-	            if(arr[p2] < arr[p1]) {
-	                ans[p1] = arr[p2];
-	                break;
-	            }
-	            p2++;
-	        }
-	        if(p2 >= arr.length) {
-	            ans[p1] = -1;
-	        }
+	    
+	    for(int i=arr.length-1; i>=0; i--) {
+	      
+	      while( (st.size() != 0) && st.peek() >= arr[i]) {
+	          st.pop();
+	      }
+	      if((st.size() != 0) && st.peek() < arr[i])
+	      {
+	          ans[i] = st.peek();
+	      }
+	      else if((st.size() == 0)) {
+	          ans[i] = -1;
+	      }
+	      st.push(arr[i]);
 	    }
-	    ans[ans.length-1]=-1;
+	    
 	        
 	    return ans;
 	} 
