@@ -31,23 +31,20 @@ class GFG{
 class Solution{
     static List<Integer> leftSmaller(int n, int a[])
     {
-        
-        
-        List<Integer> al = new ArrayList<>();
-        Stack<Integer> st = new Stack<>();
-        for(int i=0; i<a.length; i++) {
-           while( !st.empty() && st.peek() >= a[i]) {
-                    st.pop();
-           }
-           if(!st.empty() && st.peek() < a[i]) {
-               al.add(st.peek());
-           }
-           else if(st.empty()) {
-               al.add(-1);
-           }
-               st.push(a[i]);
-        }
-        
-        return al;
+         Deque<Integer> st = new ArrayDeque<>();
+         ArrayList<Integer> al = new ArrayList<>();
+         for(int i=0; i<n; i++) {
+             while(st.size() != 0 && st.peek() >= a[i]) {
+                 st.pop();
+             }
+             if(st.size() != 0 && st.peek() < a[i]) {
+                 al.add(st.peek());
+             }
+             else {
+                 al.add(-1);
+             }
+             st.push(a[i]);
+         }
+         return al;
     }
 }
