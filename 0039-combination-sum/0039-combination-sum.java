@@ -9,25 +9,21 @@ class Solution {
     }
     static void fun(int i, int n, int sum, int target,List<Integer> al,
                   List<List<Integer>> ans, int[] arr) {
-        if(sum > target) return;
+        
         if(i == n) {
-            if(sum == target) {
+            if(target == 0) {
                 ans.add(new ArrayList(al));
             }
             return;
         }
-        
-        // pick same number
-        // fun(index, n, sum, target, al, ans, candidates);
-        
+       
+        if(arr[i] <= target) {
         al.add(arr[i]);
-        sum += arr[i];
-        // pick next number
-        fun(i, n, sum, target, al, ans, arr);
-        
+        // pick same number
+        fun(i, n, sum, target-arr[i], al, ans, arr);       
         al.remove(al.size() -1);
-        sum -= arr[i];
-        
+        }
+
         // pick next number
         fun(i+1, n, sum, target, al, ans, arr);
         
