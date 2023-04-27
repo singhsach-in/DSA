@@ -1,34 +1,22 @@
 class Solution {
-       
-
-    public List<List<Integer>> subsetsWithDup(int[] nums) {
-        Arrays.sort(nums);
-           Set<List<Integer>> st = new HashSet<>();
-           List<List<Integer>> ls = new ArrayList<>();
-         ArrayList<Integer> al = new ArrayList<>();
-      int  index = 0;
-        fun(index, al, nums, nums.length,  st );
-        System.out.println(st);
-       for(List<Integer> l : st){
-           ArrayList<Integer> l2 = new ArrayList<>();
-           for(int x : l) {
-               l2.add(x);
-           }
-           ls.add(l2);
-       }
-        
-        return ls;
+public List<List<Integer>> subsetsWithDup(int[] nums) {
+    Arrays.sort(nums);
+    List<List<Integer>> ans = new ArrayList<>();
+    ArrayList<Integer> al = new ArrayList<>();
+    int  index = 0;
+    fun(index, al, nums, nums.length,  ans );
+    return ans;
     }
-    static void fun(int index, ArrayList<Integer> al, int[] nums, int n, Set<List<Integer>> st ) {
-        if(index == n){
-             // System.out.println(al);
-            // st.add(al);
-             st.add(new ArrayList<>(al));
-            return;
+    
+static void fun(int index, ArrayList<Integer> al, int[] arr, int n, List<List<Integer>> ans ) {
+        
+             ans.add(new ArrayList<>(al));
+     
+        for(int i=index; i<n; i++){
+            if(i > index && arr[i] == arr[i-1]) continue;
+            al.add(arr[i]);
+            fun(i+1, al, arr, n,  ans );
+            al.remove(al.size() - 1);
         }
-        al.add(nums[index]);
-        fun(index+1, al, nums,n, st);
-        al.remove(al.size() - 1);
-        fun(index+1, al, nums,n, st);
    }
 }
