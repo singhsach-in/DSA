@@ -44,13 +44,11 @@ class Solution {
                 String row = al.get(i);
                 row = row.substring(0, j) + "Q" + row.substring(j+1);
                 al.set(i, row);
-                solve(i+1, new ArrayList<>(al), ans, n);
+                solve(i+1, al, ans, n);
                 row = al.get(i);
                 row = row.substring(0, j) + "." + row.substring(j+1);
                 al.set(i, row);
             }
-        }
-         // al.remove(al.size() -1);
-       
+        }    
     }
 }
