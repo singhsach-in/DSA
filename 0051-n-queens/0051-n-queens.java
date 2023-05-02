@@ -3,51 +3,49 @@ class Solution {
         // to store the result
         List<List<String>> ans = new ArrayList<>();
         // to store the possible order
-        List<String> al = new ArrayList<>();
-        for(int i=0; i<n; i++){
-            String s="";
-            for(int j=0; j<n; j++){
-                s+=".";
+        char[][] board = new char[n][n];
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                board[i][j] = '.';
             }
-            al.add(s);
         }
-        // System.out.println(al);
-         solve(0, al, ans, n);
+         solve(0, board, ans, n);
          return ans;
     }
-    static boolean isValid(int i, int j, int n, List<String> al) {
+    
+    static boolean isValid(int row, int col, int n, char[][] board) {
         // checking column
-        for(int k=0; k<n; k++){
-            if(al.get(k).charAt(j) == 'Q')
+        for(int i = 0; i < row; i++){
+            if(board[i][col] == 'Q')
                 return false;
         }
-        //checking left upper digonal
-        for(int k=i, l=j; k>=0 && l<n; k--,l++){
-             if(al.get(k).charAt(l) == 'Q')
+        //checking left upper diagonal
+        for(int i = row, j = col; i >= 0 && j < n; i--, j++){
+             if(board[i][j] == 'Q')
                 return false;
         }
-        //checking right upper digonal
-        for(int k=i, l=j; k>=0 && l>=0; k--,l--){
-             if(al.get(k).charAt(l) == 'Q')
+        //checking right upper diagonal
+        for(int i = row, j = col; i >= 0 && j >= 0; i--, j--){
+             if(board[i][j] == 'Q')
                 return false;
         }
-        
         return true;
     }
-    static void solve(int i, List<String> al, List<List<String>> ans, int n) {
-        if(i == n) {
-            ans.add(new ArrayList(al));
+    
+    static void solve(int row, char[][] board, List<List<String>> ans, int n) {
+        if(row == n) {
+            List<String> solution = new ArrayList<>();
+            for(int i = 0; i < n; i++){
+                solution.add(new String(board[i]));
+            }
+            ans.add(solution);
             return;
         }
-        for(int j=0; j<n; j++) {
-            if(isValid(i, j, n, al)) {
-                String row = al.get(i);
-                row = row.substring(0, j) + "Q" + row.substring(j+1);
-                al.set(i, row);
-                solve(i+1, al, ans, n);
-                row = al.get(i);
-                row = row.substring(0, j) + "." + row.substring(j+1);
-                al.set(i, row);
+        for(int col = 0; col < n; col++) {
+            if(isValid(row, col, n, board)) {
+                board[row][col] = 'Q';
+                solve(row + 1, board, ans, n);
+                board[row][col] = '.';
             }
         }    
     }
